@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = Resources.ProfileForm_HeaderText;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Web.GlobalResources
+<div class="content">
+    <div id="ProfileFormContainer">
+        <div class="row-fluid login-title">
+            <h2>@Resources.ProfileForm_HeaderText</h2>
+        </div>
+        <div class="row-fluid login-form form-field col-lg-5 col-md-6 col-sm-12">
+            <div class="row-fluid responsiveForm">
+                <form name="profileCompleteForm" novalidate method="post" action='@Url.Action("ProfileComplete", "User")'>
+                    <div class="form-group">
+                        <label for="FullName">@Resources.ProfileForm_FullName_Label:</label>
+                        <input type="text" class="form-control invalid" id="FullName"  name="FullName" placeholder="@Resources.ProfileForm_FullName_Label" required>
+                        <div class="invalid-feedback" id="FullNameFeedback"> Please provide Full Name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ContactNumber">@Resources.ProfileForm_ContactNumber_Label:</label>
+                        <input type="text" class="form-control invalid" id="ContactNumber" name="ContactNumber" maxlength="10" placeholder="@Resources.ProfileForm_ContactNumber_Label" required>
+                        <div class="invalid-feedback" id="ContactNumberFeedback">Please provide a valid Contact Number.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">@Resources.ProfileForm_Address_Label:</label>
+                        <textarea class="form-control" id="Address" name="Address" laceholder="@Resources.ProfileForm_Address_Label" required > </textarea>
+                        <div class="invalid-feedback" id="AddressFeedback">
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="SendPromotions" />
+                        <label for="chkShowPassword">@Resources.ProfileForm_SendPromotions_Text</label>
+                    </div>
+                    <input type="hidden" id="UserId" value="@ViewData["UserId"]" name="UserId" />
+                    <input type="button" id="btnSave" class="btn btn-primary btn-large" value="@Resources.ProfileForm_SubmitButton_Text" />
+                    <input type="submit" id="btnSubmit" style="display:none" />
+                    <div class="invalid-feedback" id="validationSummary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Scripts/App/User/profile.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            var ProfileFormObj = new ProfileForm();
+            ProfileFormObj.initialize();
+        });
+    </script>
+}
