@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using UserSignup.Models.Domain;
 using UserSignup.Models.Request;
@@ -11,5 +12,6 @@ namespace UserSignup.Service.Interfaces
         Task<ResponseBase> Signup(SignupRequest signup);
         ValidateUserResponse Validate(LoginRequest signup);
         Task<ResponseBase> SaveUserProfile(UserProfileRequest signup);
+        List<UserResponse> GetAllUsers();
     }
 }

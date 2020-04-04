@@ -10,6 +10,7 @@ using UserSignup.Repository.Interfaces;
 using UserSignup.Service.Interfaces;
 using UserSignup.Utilities;
 using UserSignup.Utilities.Interfaces;
+using System.Linq;
 
 namespace UserSignup.Service
 {
@@ -216,6 +217,27 @@ namespace UserSignup.Service
             };
             await _userRepo.SaveUserProfile(userProfile);
             return res;
+        }
+
+        public List<UserResponse> GetAllUsers()
+        {
+            var users = _userRepo.GetAllUsers();
+            return users.Select(u => new UserResponse()
+            {
+                Email = u.Email,
+                UserId = u.UserId,
+                Password = u.Password,
+                VerificationCode = u.VerificationCode,
+                PasswordSalt = u.PasswordSalt,
+                UserProfile = new UserProfileResponse
+                {
+                    Address = u.UserProfile != null ? u.UserProfile.Address : "",
+                    ContactNumber = u.UserProfile != null ? u.UserProfile.ContactNumber : "",
+                    FullName = u.UserProfile != null ? u.UserProfile.FullName : "",
+                    SendPromotions = u.UserProfile != null ? u.UserProfile.SendPromotions : false
+                }
+
+            }).ToList();
         }
     }
 }

@@ -12,5 +12,7 @@ namespace UserSignup.Repository.Interfaces
         SignUpModel GetSignedupUser(string Email);
         SignUpModel GetSignedupUser(int UserId);
         Task SaveUserProfile(UserProfileModel userProfile);
+
+        List<SignUpModel> GetAllUsers();
     }
 }

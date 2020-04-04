@@ -14,5 +14,7 @@ namespace UserSignup.Models.Entities
         public string PasswordSalt { set; get; }
 
         public string VerificationCode { get; set; }
+
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

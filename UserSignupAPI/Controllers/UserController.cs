@@ -42,5 +42,12 @@ namespace UserSignup.Controllers
         {
             return await _userService.SaveUserProfile(signup);
         }
+
+        [HttpGet]
+        [Route("list")]
+        public List<UserResponse> UserList()
+        {
+            return  _userService.GetAllUsers();
+        }
     }
 }

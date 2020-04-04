@@ -105,5 +105,32 @@ namespace UserSignup.Repository
             await _context.SaveChangesAsync();
         }
 
+        public List<SignUpModel> GetAllUsers()
+        {
+            var users = _context.SignedupUser;
+            foreach (var user in users)
+            {
+                _context.Entry(user).Reference(u => u.UserProfile).Load();
+            }
+
+
+            return users.ToList().Select(u => new SignUpModel()
+            {
+                UserId = u.SignedupUserId,
+                Email = u.Email,
+                Password = u.Password,
+                PasswordSalt = u.PasswordSalt,
+                VerificationCode = u.VerificationCode,
+                UserProfile = new UserProfileModel
+                {
+                    Address = u.UserProfile != null ? u.UserProfile.Address : "",
+                    ContactNumber = u.UserProfile != null ? u.UserProfile.ContactNumber : "",
+                    FullName = u.UserProfile != null ? u.UserProfile.FullName : "",
+                    SendPromotions = u.UserProfile != null ? u.UserProfile.SendPromotions : false
+                }
+
+            }).ToList();
+        }
+
     }
 }
