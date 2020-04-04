@@ -3,9 +3,7 @@
         $('#SigninButton').on('click', (event) => {
             event.preventDefault();
             event.stopPropagation();
-            let form = $('form');
-            form.addClass('was-validated');
-            form[0].checkValidity();
+            $('form').removeClass('was-validated');
             if (!validateForm()) {
                 return;
             }
@@ -61,7 +59,14 @@
     };
 
     let setValidations = function (validations) {
+        // clear the existing validations
         $('.invalid-feedback').html('');
+        let $formControls = $('.form-control');
+        if ($formControls.length > 0) {
+            for (let i = 0; i < $formControls.length; i++) {
+                $formControls[i].setCustomValidity('');
+            }
+        }
 
         if (validations && validations.length) {
             let validationSummary = '';
@@ -80,6 +85,7 @@
                 $('#validationSummary').hide();
             }
         }
+        $('form').addClass('was-validated');
     };
 
     $('#chkShowPassword').change(function () {

@@ -3,9 +3,7 @@
         $('form').on('submit', (event) => {
             event.preventDefault();
             event.stopPropagation();
-            let form = $('form');
-            form.addClass('was-validated');
-            form[0].checkValidity();
+            $('form').removeClass('was-validated');
             if (!validateForm()) {
                 return;
             }
@@ -46,17 +44,22 @@
                 message: "Required"
             });
         }
-        setValidations(validations);
+        setValidations(validations);       
         return validations.length === 0;
     };
 
     let setValidations = function (validations) {
+        // clear the existing validations
         $('.invalid-feedback').html('');
+        let $formControls = $('.form-control');
+        if ($formControls.length > 0) {
+            for (let i = 0; i < $formControls.length; i++) {
+                $formControls[i].setCustomValidity('');
+            }
+        }
 
         if (validations && validations.length) {
             let validationSummary = '';
-            //let form = $('form');
-            //form.removeClass('was-validated');
             validations.forEach(validation => {
                 if (!validation.key) {
                     validationSummary = validationSummary + ' ' + validation.message;
@@ -72,6 +75,7 @@
                 $('#validationSummary').hide();
             }
         }
+        $('form').addClass('was-validated');
     };
 
     $('#chkShowPassword').change(function () {
